@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RescueMesh – Emergency Communication Network</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
   <style>
     * {
       box-sizing: border-box;
       font-family: 'Poppins', 'Segoe UI', Roboto, Arial, sans-serif;
     }
+
     body {
       margin: 0;
       background: linear-gradient(135deg, #0f172a, #020617);
@@ -27,15 +32,16 @@
       background: linear-gradient(90deg, #2563eb, #7c3aed);
       padding: 18px 26px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
     }
+
     .title {
       font-size: 24px;
       font-weight: 700;
-      letter-spacing: 0.5px;
-      color: #ffffff;
+      color: white;
     }
+
     .status {
       display: flex;
       align-items: center;
@@ -43,11 +49,12 @@
       font-size: 14px;
       color: #e0e7ff;
     }
+
     .dot {
       width: 10px;
       height: 10px;
-      border-radius: 50%;
       background: #22c55e;
+      border-radius: 50%;
     }
 
     .container {
@@ -58,18 +65,14 @@
     }
 
     .panel {
-      background: linear-gradient(180deg, #020617, #020617);
+      background: #020617;
       border-radius: 16px;
       padding: 18px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.35);
     }
 
     .panel h3 {
-      margin: 0 0 12px 0;
-      font-size: 16px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      color: #f8fafc;
+      margin-bottom: 12px;
       border-bottom: 1px solid #1e293b;
       padding-bottom: 8px;
     }
@@ -78,123 +81,122 @@
       padding: 12px 14px;
       margin-bottom: 10px;
       border-radius: 10px;
-      font-size: 15px;
-      font-weight: 500;
       display: flex;
       justify-content: space-between;
-      align-items: center;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .node:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-    }
-    .online { 
+
+    .online {
       background: linear-gradient(90deg, rgba(34,197,94,0.45), rgba(34,197,94,0.2));
       animation: pulse 2.5s infinite;
     }
-    .offline { background: linear-gradient(90deg, rgba(239,68,68,0.45), rgba(239,68,68,0.2)); }
+
+    .offline {
+      background: linear-gradient(90deg, rgba(239,68,68,0.45), rgba(239,68,68,0.2));
+    }
 
     .map {
       height: 360px;
-      background: linear-gradient(135deg, #1e293b, #020617);
       border-radius: 14px;
+      border: 2px dashed #6366f1;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #e0e7ff;
       margin-bottom: 18px;
-      font-size: 15px;
-      border: 2px dashed #6366f1;
+      color: #e0e7ff;
     }
 
     .alert {
-      font-size: 14px;
-      padding: 10px 12px;
-      margin-bottom: 8px;
+      padding: 10px;
       border-radius: 8px;
+      background: linear-gradient(90deg, rgba(239,68,68,0.45), rgba(239,68,68,0.2));
     }
-    .alert-danger { background: linear-gradient(90deg, rgba(239,68,68,0.45), rgba(239,68,68,0.2)); }
 
     .detail {
-      font-size: 15px;
       margin-bottom: 10px;
-      color: #e5e7eb;
-      font-weight: 500;
     }
+
     .battery {
       height: 12px;
       background: #334155;
       border-radius: 8px;
       overflow: hidden;
-      margin-top: 6px;
     }
+
     .battery-level {
       height: 100%;
+      width: 0%;
       background: #ef4444;
     }
 
     footer {
       text-align: center;
       padding: 14px;
-      font-size: 14px;
-      color: #c7d2fe;
       background: linear-gradient(90deg, #1e3a8a, #581c87);
+      color: #c7d2fe;
     }
   </style>
 </head>
+
 <body>
 
   <!-- Top Bar -->
   <div class="topbar">
-    <div class="title">RescueMesh <span style="font-weight:400; color:#94a3b8;">| Emergency Mesh Network Dashboard</span></div>
+    <div class="title">RescueMesh | Emergency Mesh Network Dashboard</div>
     <div class="status">
       <div class="dot"></div>
-      Network Status: <strong>Healthy</strong> | Last updated: 10s ago
-    </div>
-      Network Healthy | Last updated: 10s ago
+      <span id="netStatus">Network Healthy | Last updated: 10s ago</span>
     </div>
   </div>
 
-  <!-- Main Layout -->
+  <!-- Main Content -->
   <div class="container">
 
-    <!-- Left Panel: Nodes -->
+    <!-- Nodes -->
     <div class="panel">
       <h3>Active Nodes</h3>
-      <div class="node online">🟢 Node-01 <span style="font-weight:700;">85%</span></div>
-      <div class="node offline">🔴 Node-02 <span style="font-weight:700;">OFFLINE</span></div>
+      <div class="node online">🟢 Node-01 <span>85%</span></div>
+      <div class="node offline">🔴 Node-02 <span>OFFLINE</span></div>
     </div>
 
-    <!-- Center Panel: Map & Alerts -->
+    <!-- Network -->
     <div class="panel">
       <h3>Network Status</h3>
       <div class="map">Network Map / Mesh Visualization</div>
 
       <h3>Alerts</h3>
-      <div class="alert alert-danger">⚠ Node-02 went OFFLINE</div>
-      
+      <div class="alert">⚠ Node-02 went OFFLINE</div>
     </div>
 
-    <!-- Right Panel: Node Details -->
+    <!-- Details -->
     <div class="panel">
       <h3>Node Details</h3>
       <div class="detail"><strong>ID:</strong> Node-02</div>
       <div class="detail"><strong>Status:</strong> OFFLINE</div>
       <div class="detail"><strong>Last Seen:</strong> 14:32</div>
-      <div class="detail"><strong>Battery:</strong></div>
+
+      <strong>Battery</strong>
       <div class="battery">
-        <div class="battery-level" style="width:0%; background:#ef4444"></div>
-      </div>
+        <div class="battery-level" id="battery"></div>
       </div>
     </div>
 
   </div>
 
   <footer>
-    Prototype Dashboard | Offline‑First | Self‑Healing Mesh Network
+    Prototype Dashboard | Offline-First | Self-Healing Mesh Network
   </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Example dynamic update
+    setTimeout(() => {
+      document.getElementById("netStatus").innerText =
+        "Network Degraded | Node-02 Offline";
+
+      document.getElementById("battery").style.width = "0%";
+    }, 3000);
+  </script>
 
 </body>
 </html>
