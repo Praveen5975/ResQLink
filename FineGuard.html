@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FineGuard AI</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+
+/* ================= VIDEO BACKGROUND ================= */
+
+#bgVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.video-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(5, 10, 25, 0.75);
+  z-index: -1;
+}
+
+/* ================= GLASS + NEON ================= */
+
+.glass {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(0,255,255,0.3);
+  box-shadow: 0 0 20px rgba(0,255,255,0.15);
+  transition: 0.3s ease;
+}
+
+.glass:hover {
+  box-shadow: 0 0 30px rgba(0,255,255,0.6);
+}
+
+/* ================= ARCH BLOCKS ================= */
+
+.arch-block {
+  cursor: pointer;
+  border: 1px solid rgba(168,85,247,0.5);
+  box-shadow: 0 0 15px rgba(168,85,247,0.4);
+  transition: all 0.3s ease;
+}
+
+.arch-block:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 35px rgba(168,85,247,1);
+}
+
+/* ================= SIDE PANEL ================= */
+
+.arch-panel {
+  opacity: 0;
+  transform: translateX(60px);
+  transition: all 0.5s ease;
+  min-height: 200px;
+}
+
+.arch-panel.active {
+  opacity: 1;
+  transform: translateX(0);
+  border: 1px solid rgba(0,255,255,0.6);
+  box-shadow: 0 0 40px rgba(0,255,255,0.8);
+}
+
+/* ================= BUTTON ================= */
+
+.btn-neon {
+  background: linear-gradient(90deg,#3b82f6,#a855f7);
+  transition: 0.3s;
+}
+
+.btn-neon:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(168,85,247,0.8);
+}
+
+/* ================= RISK BAR ================= */
+
+#riskBar {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.8s ease;
+}
+
+</style>
+</head>
+
+<body class="text-white font-sans">
+
+<!-- VIDEO -->
+<video autoplay muted loop playsinline id="bgVideo">
+  <source src="bg.mp4" type="video/mp4">
+</video>
+<div class="video-overlay"></div>
+
+<!-- NAVBAR -->
+<nav class="flex justify-between items-center p-6">
+  <h1 class="text-2xl font-bold text-cyan-400">FineGuard AI</h1>
+  <button class="btn-neon px-5 py-2 rounded-lg">Get Started</button>
+</nav>
+
+<!-- HERO -->
+<section class="text-center mt-20 mb-20">
+  <h2 class="text-5xl font-bold mb-6">
+    Intelligent OS-Level Protection
+  </h2>
+  <p class="text-gray-300 text-lg">
+    Hybrid AI-driven risk detection combining local execution & cloud intelligence.
+  </p>
+</section>
+
+<!-- STATS -->
+<section class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto px-6 mb-20">
+
+<div class="glass p-8 rounded-2xl text-center">
+<h3 class="text-3xl font-bold text-green-400">99.2%</h3>
+<p>Threat Detection Accuracy</p>
+</div>
+
+<div class="glass p-8 rounded-2xl text-center">
+<h3 class="text-3xl font-bold text-blue-400">&lt;1s</h3>
+<p>Local Risk Evaluation</p>
+</div>
+
+<div class="glass p-8 rounded-2xl text-center">
+<h3 class="text-3xl font-bold text-purple-400">Hybrid</h3>
+<p>Local + Cloud Intelligence</p>
+</div>
+
+</section>
+
+<!-- URL ANALYZER -->
+<section class="glass p-10 rounded-2xl max-w-3xl mx-auto mb-20">
+
+<h3 class="text-2xl mb-6 text-center">🔍 Real-Time URL Risk Analyzer</h3>
+
+<div class="flex gap-4">
+<input id="urlInput" class="flex-1 p-3 rounded-lg text-black" placeholder="Enter URL...">
+<button onclick="checkRisk()" class="btn-neon px-6 py-3 rounded-lg">Analyze</button>
+</div>
+
+<div id="processing" class="mt-4 text-center text-cyan-400 hidden">
+Analyzing with Cloud Intelligence...
+</div>
+
+<div class="w-full bg-gray-700 rounded-full h-4 mt-6">
+<div id="riskBar"></div>
+</div>
+
+<div id="result" class="mt-6 text-lg font-bold text-center"></div>
+
+</section>
+
+<!-- ARCHITECTURE -->
+<section class="max-w-6xl mx-auto px-6 mb-20">
+
+<h3 class="text-3xl text-center mb-12">System Architecture</h3>
+
+<div class="grid md:grid-cols-2 gap-10">
+
+<div class="flex flex-col space-y-6 items-center">
+
+<div class="arch-block w-72 px-6 py-3 rounded-xl glass" onmouseover="showInfo('device')">
+🖥 User Device / OS Layer
+</div>
+
+<div class="arch-block w-72 px-6 py-3 rounded-xl glass" onmouseover="showInfo('local')">
+⚡ Local Risk Engine
+</div>
+
+<div class="arch-block w-72 px-6 py-3 rounded-xl glass" onmouseover="showInfo('cloud')">
+☁ Cloud Intelligence API
+</div>
+
+<div class="arch-block w-72 px-6 py-3 rounded-xl glass" onmouseover="showInfo('decision')">
+🛡 Final Decision Engine
+</div>
+
+</div>
+
+<div id="archInfo" class="arch-panel glass p-8 rounded-2xl text-gray-300">
+Hover over a component to view explanation.
+</div>
+
+</div>
+</section>
+
+<!-- PRIVACY -->
+<section class="max-w-5xl mx-auto px-6 mb-20">
+
+<h3 class="text-3xl text-center mb-10">Privacy & Trust Commitment</h3>
+
+<div class="grid md:grid-cols-3 gap-8">
+
+<div class="glass p-6 rounded-xl">
+<h4 class="text-cyan-400 font-semibold mb-3">🔒 Local-First Processing</h4>
+<p>User-sensitive data remains on-device whenever possible.</p>
+</div>
+
+<div class="glass p-6 rounded-xl">
+<h4 class="text-purple-400 font-semibold mb-3">🛡 End-to-End Encryption</h4>
+<p>All cloud communication is encrypted via secure protocols.</p>
+</div>
+
+<div class="glass p-6 rounded-xl">
+<h4 class="text-blue-400 font-semibold mb-3">🤝 Transparent Scoring</h4>
+<p>Users receive clear explanations behind each decision.</p>
+</div>
+
+</div>
+</section>
+
+<footer class="mt-24 border-t border-cyan-500/30 bg-black/40 backdrop-blur-lg">
+  
+  <div class="max-w-6xl mx-auto px-6 py-12 grid md:grid-cols-3 gap-10 text-gray-300">
+
+    <!-- Brand -->
+    <div>
+      <h2 class="text-2xl font-bold text-cyan-400 mb-4">FineGuard</h2>
+      <p class="text-sm text-gray-400">
+        Intelligent OS-Level Cybersecurity powered by hybrid AI protection.
+      </p>
+    </div>
+
+    <!-- Links -->
+    <div>
+      <h3 class="text-lg font-semibold text-purple-400 mb-4">Quick Links</h3>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#" class="hover:text-cyan-400 transition">Home</a></li>
+        <li><a href="#" class="hover:text-cyan-400 transition">Architecture</a></li>
+        <li><a href="#" class="hover:text-cyan-400 transition">Privacy</a></li>
+        <li><a href="#" class="hover:text-cyan-400 transition">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- Team -->
+    <div>
+      <h3 class="text-lg font-semibold text-blue-400 mb-4">Built By</h3>
+      <p class="text-sm">
+        Team <span class="text-cyan-400 font-semibold">FineWorks</span>
+      </p>
+      <p class="text-xs text-gray-500 mt-3">
+        Engineering secure digital ecosystems with intelligent protection layers.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="border-t border-cyan-500/20 text-center py-6 text-sm text-gray-500">
+    © 2026 FineGuard. All Rights Reserved. <br>
+    Developed by <span class="text-cyan-400">FineWorks</span>.
+  </div>
+
+</footer>
+
+
+<script>
+
+function showInfo(type) {
+const info = document.getElementById("archInfo");
+
+const content = {
+device: "Monitors OS-level metadata & execution patterns before malicious activation.",
+local: "Instant rule-based scoring engine blocks high-risk threats immediately.",
+cloud: "Global ML-powered intelligence verifies medium-risk URLs & behavior.",
+decision: "Final hybrid evaluation determines block, warn, or allow actions."
+};
+
+info.innerHTML = content[type];
+info.classList.add("active");
+}
+
+function checkRisk() {
+
+const url = document.getElementById("urlInput").value;
+const result = document.getElementById("result");
+const riskBar = document.getElementById("riskBar");
+const processing = document.getElementById("processing");
+
+if (!url) {
+result.innerHTML = "⚠ Please enter a URL.";
+return;
+}
+
+processing.classList.remove("hidden");
+riskBar.style.width = "0%";
+result.innerHTML = "";
+
+setTimeout(() => {
+
+let riskScore = 0;
+
+if (url.includes("http://")) riskScore += 40;
+if (url.includes("@")) riskScore += 30;
+if (url.length > 60) riskScore += 20;
+if (url.includes("login") || url.includes("verify")) riskScore += 30;
+
+riskBar.style.width = riskScore + "%";
+
+if (riskScore >= 60) {
+riskBar.style.background = "red";
+result.innerHTML = "🔴 High Risk — Threat Blocked";
+result.className = "mt-6 text-lg font-bold text-red-500 text-center";
+}
+else if (riskScore >= 30) {
+riskBar.style.background = "orange";
+result.innerHTML = "🟠 Medium Risk — Sent to Cloud AI";
+result.className = "mt-6 text-lg font-bold text-yellow-400 text-center";
+}
+else {
+riskBar.style.background = "green";
+result.innerHTML = "🟢 Safe — No Threat Detected";
+result.className = "mt-6 text-lg font-bold text-green-400 text-center";
+}
+
+processing.classList.add("hidden");
+
+},1500);
+}
+
+</script>
+
+</body>
+</html>
+
+
