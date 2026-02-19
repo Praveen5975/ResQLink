@@ -1,16 +1,22 @@
-# resqlink
+# ResQLink 🆘 📡
 
-A new Flutter project.
+**ResQLink** is a dual-layered emergency response system built during a 24-hour hackathon. It bridges high-speed mobile alerts with localized ESP32 mesh communication.
 
-## Getting Started
+## 🚀 The Core Concept
+When standard networks fail or speed is critical, **ResQLink** uses:
+* **Mobile App (Flutter):** A sleek UI for users to trigger SOS signals and view real-time rescue status.
+* **Hardware (ESP32):** Acting as the "Link," these devices handle the low-level data transmission and sensor integration.
 
-This project is a starting point for a Flutter application.
+## 🛠️ Tech Stack
+* **App:** Flutter / Dart
+* **Hardware:** ESP32 (C++ / Arduino)
+* **Protocol:** HTTP/JSON & MQTT
+* **Target:** Emergency Response & IoT Monitoring
 
-A few resources to get you started if this is your first Flutter project:
+## 📂 Project Structure
+* `/lib` - Flutter source code for the ResQLink mobile app.
+* `/firmware` - (Add your ESP32 .ino files here!)
+* `/android, /ios, /windows` - Platform-specific builds.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+*Built with caffeine and minimal sleep.*
